@@ -13,15 +13,3 @@ def merge_simple_data(frames: list):
                          'CODE_CULTU_2019', 'CODE_GROUP_2019',
                          ]
     return df_merged
-
-
-def merge_validation_data():
-    return
-
-
-def merge_new_features_data():
-    return
-
-
-def merge_dataset():
-    return
