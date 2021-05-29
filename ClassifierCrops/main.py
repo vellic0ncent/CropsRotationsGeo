@@ -7,6 +7,7 @@ import models
 import pathlib
 import pandas as pd
 
+DATA_SRC: str = os.getenv("DATA_SRC", "db")
 DATA_DIR: str = os.getenv("DATA_DIR", r"/home/user/PycharmProjects/pythonProject/src/")
 CACHE_DIR: str = os.getenv("CACHE_DIR")
 DB_HOST: str = os.getenv("DB_HOST", "localhost")
@@ -58,9 +59,9 @@ def prepare_predictions_for_persisting(predictions):
 
 
 if CACHE_DIR is None:
-    data_to_predict = load_data(DATA_DIR, "predict")
+    data_to_predict = load_data(DATA_DIR, "predict", DATA_SRC)
 else:
-    data_to_predict = load_data_and_cache(DATA_DIR, "predict", CACHE_DIR)
+    data_to_predict = load_data_and_cache(DATA_DIR, "predict", CACHE_DIR, DATA_SRC)
 
 
 # modelling
