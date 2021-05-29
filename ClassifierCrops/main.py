@@ -19,13 +19,15 @@ DB_PASSWORD: str = os.getenv("DB_PASSWORD", "postgres")
 db = Database(host=DB_HOST, port=DB_PORT, database=DB_NAME, user=DB_USERNAME, password=DB_PASSWORD)
 
 
-def load_data(path: str, data_batch: str):
-    # connect to local file
-    data = data_consolidation \
-        .merger \
-        .merge_simple_data(data_consolidation \
-                           .subset_data \
-                           .get_data(path, data_batch))
+def load_data(path: str, data_batch: str, source: str):
+    if source == "db":
+        data = data_consolidation.load_from_db(db, data_batch)
+    else:
+        data = data_consolidation \
+            .merger \
+            .merge_simple_data(data_consolidation \
+                               .subset_data \
+                               .get_data(path, data_batch))
 
     # add coordinates
     data_mod = feature_engineering.coordinates.add_lamb_coordinates(data)
@@ -41,12 +43,12 @@ def load_data(path: str, data_batch: str):
     return data_mod
 
 
-def load_data_and_cache(path: str, data_batch: str, cache_dir: str):
-    cache_file = pathlib.Path(os.path.join(cache_dir, f"{data_batch}.csv"))
+def load_data_and_cache(path: str, data_batch: str, cache_dir: str, source: str):
+    cache_file = pathlib.Path(os.path.join(cache_dir, f"{data_batch}_{source}.csv"))
     if cache_file.exists():
         data = pd.read_csv(cache_file.name)
     else:
-        data = load_data(path, data_batch)
+        data = load_data(path, data_batch, source)
         data.to_csv(cache_file.name, index=False)
     return data
 

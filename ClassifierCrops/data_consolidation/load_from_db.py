@@ -1,5 +1,6 @@
 import pandas.io.sql as sqlio
 
+
 def load_from_db(db, data_batch: str):
     if data_batch == "validate":
         table_prefix = "test2019"
