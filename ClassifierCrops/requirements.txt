@@ -2,3 +2,5 @@ setuptools~=52.0.0
 pandas
 pyproj
 psycopg2
+shapely
+geopandas

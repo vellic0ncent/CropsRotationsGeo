@@ -1,27 +1,8 @@
 version: "2"
 
 services:
-  postgres:
-#    build: ./db
-    image: postgres
-    ports:
-      - 5432:5432
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root
-      POSTGRES_DB: postgres
-    volumes:
-      - ./db/scripts/create_table_traindata.sql:/docker-entrypoint-initdb.d/init.sql
   app:
     image: app
     build: ./ClassifierCrops/
-#  web:
-#    build: .
-#    command: python manage.py runserver 0.0.0.0:8000
-#    volumes:
-#      - .:/code
-#    ports:
-#      - "8000:8000"
-#    depends_on:
-#      - db
-
+    env_file:
+      - app.env

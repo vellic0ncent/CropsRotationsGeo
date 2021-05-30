@@ -22,12 +22,10 @@ db = Database(host=DB_HOST, port=DB_PORT, database=DB_NAME, user=DB_USERNAME, pa
 
 def load_data(path: str, data_batch: str, source: str):
     if source == "db":
-        data = data_consolidation.load_from_db(db, data_batch)
+        data = data_consolidation.load_from_db.load_from_db(db, data_batch)
     else:
-        data = data_consolidation \
-            .merger \
-            .merge_simple_data(data_consolidation \
-                               .subset_data \
+        data = data_consolidation.merger \
+            .merge_simple_data(data_consolidation.subset_data \
                                .get_data(path, data_batch))
 
     # add coordinates

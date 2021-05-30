@@ -1,11 +1,13 @@
 import pandas as pd
 import os
 import random
+import psycopg2
 
 
 class Database:
     def __init__(self, host="localhost", port=5432, database="db_name", user="user_name", password="pswd"):
-        self.conn = psycopg2.connect(host=host, database=database, user=user, password=password)
+        print(host, port, database, user, password)
+        self.conn = psycopg2.connect(host=host, port=port, dbname=database, user=user, password=password)
         self.cursor = self.conn.cursor()
 
     def make_query(self, query):
